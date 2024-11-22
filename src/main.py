@@ -2,10 +2,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-# TODO: add documentation
-# TODO: check the status codes
-# TODO: add tests
-
 app = FastAPI(
     title="Collective[i] case study chatbot",
     description="A simple chatbot that has hardcoded responses",
@@ -39,6 +35,8 @@ def respond_to_chat(message: ChatMessage):
 
     if "hello" in inputMessage:
         responseMessage = "Hello to you!"
+    elif "how are you" in inputMessage:
+        responseMessage = "I am a robot and I don't have feelings"
     elif inputMessage == "i can has cheezburger?":
         responseMessage = "can I haz too?"
     elif "borg" in inputMessage: 
