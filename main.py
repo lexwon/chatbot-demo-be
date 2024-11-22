@@ -37,10 +37,14 @@ def respond_to_chat(message: ChatMessage):
     inputMessage  = message.message.lower()
     responseMessage = ""
 
-    if inputMessage == "hello":
+    if "hello" in inputMessage:
         responseMessage = "Hello to you!"
     elif inputMessage == "i can has cheezburger?":
         responseMessage = "can I haz too?"
+    elif "borg" in inputMessage: 
+        responseMessage = "Resistance is futile"
+    elif "skynet" in inputMessage:
+        responseMessage = "Hasta la vista, baby"
     else:
         responseMessage = "I'm sorry Dave, I can't do that"     
 
