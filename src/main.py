@@ -1,3 +1,4 @@
+import time
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,26 +25,36 @@ class ChatMessage(BaseModel):
     message: str
 
 
+isRunning = False
 @app.post(
     "/api/chat",
     summary="POST a message to the chatbot",
     description="Returns hardcode responses to chat messages",
 )
 def respond_to_chat(message: ChatMessage):
-    inputMessage  = message.message.lower()
-    responseMessage = ""
+    global isRunning
 
-    if "hello" in inputMessage:
-        responseMessage = "Hello to you!"
-    elif "how are you" in inputMessage:
-        responseMessage = "I am a robot and I don't have feelings"
-    elif inputMessage == "i can has cheezburger?":
-        responseMessage = "can I haz too?"
-    elif "borg" in inputMessage: 
-        responseMessage = "Resistance is futile"
-    elif "skynet" in inputMessage:
-        responseMessage = "Hasta la vista, baby"
+    if not isRunning:
+        isRunning = True
+        time.sleep(3)
+        inputMessage  = message.message.lower()
+        responseMessage = ""
+
+        if "hello" in inputMessage:
+            responseMessage = "Hello to you!"
+        elif "how are you" in inputMessage:
+            responseMessage = "I am a robot and I don't have feelings"
+        elif inputMessage == "i can has cheezburger?":
+            responseMessage = "can I haz too?"
+        elif "borg" in inputMessage: 
+            responseMessage = "Resistance is futile"
+        elif "skynet" in inputMessage:
+            responseMessage = "Hasta la vista, baby"
+        else:
+            responseMessage = "I'm sorry Dave, I can't do that"     
+
+        isRunning = False
+        return {"response": responseMessage}
+
     else:
-        responseMessage = "I'm sorry Dave, I can't do that"     
-
-    return {"response": responseMessage}
+        return {"response": "I'm busy"}
